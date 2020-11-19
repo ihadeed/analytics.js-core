@@ -1,56 +1,38 @@
 'use strict';
 
-/*
- * Module Dependencies.
- */
-
 import cloneDeep from 'lodash.clonedeep'
-
-var bindAll = require('bind-all');
 
 /**
  * HOP.
  */
-
 var has = Object.prototype.hasOwnProperty;
 
-/**
- * Expose `Memory`
- */
+export class Memory {
+  store: any = {};
 
-module.exports = bindAll(new Memory());
+  /**
+   * Set a `key` and `value`.
+   */
+  set(key: string, value: unknown): boolean  {
+    this.store[key] = cloneDeep(value);
+    return true;
+  };
 
-/**
- * Initialize `Memory` store
- */
+  /**
+   * Get a `key`.
+   */
+  get(key: string): unknown | undefined  {
+    if (!has.call(this.store, key)) return;
+    return cloneDeep(this.store[key]);
+  };
 
-function Memory() {
-  this.store = {};
+  /**
+   * Remove a `key`.
+   */
+  remove(key: string): boolean  {
+    delete this.store[key];
+    return true;
+  };
 }
 
-/**
- * Set a `key` and `value`.
- */
-
-Memory.prototype.set = function(key: string, value: unknown): boolean {
-  this.store[key] = cloneDeep(value);
-  return true;
-};
-
-/**
- * Get a `key`.
- */
-
-Memory.prototype.get = function(key: string): unknown | undefined {
-  if (!has.call(this.store, key)) return;
-  return cloneDeep(this.store[key]);
-};
-
-/**
- * Remove a `key`.
- */
-
-Memory.prototype.remove = function(key: string): boolean {
-  delete this.store[key];
-  return true;
-};
+export default new Memory();

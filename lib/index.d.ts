@@ -269,5 +269,3 @@ export declare namespace SegmentAnalytics {
   }
 }
 
-declare var analytics: SegmentAnalytics.AnalyticsJS;
-export default analytics;

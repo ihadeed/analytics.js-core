@@ -1,3 +1,7 @@
+import { Cookie } from './cookie';
+import { StoreOptions } from './store';
+
+
 export interface SegmentAnalytics {
   Integrations: { [name: string]: (options: SegmentOpts) => void };
   options: InitOptions;
@@ -15,7 +19,7 @@ export interface SegmentAnalytics {
 
   // Private fields
   _options: (options: Object) => void
-  _sourceMiddlewares:  unknown
+  _sourceMiddlewares: unknown
   _integrationMiddlewares: unknown
   _destinationMiddlewares: unknown
   _integrations: unknown
@@ -33,6 +37,8 @@ export interface IntegrationsSettings {
 }
 
 export interface CookieOptions {
+  key?: string;
+  oldKey?: string;
   maxage?: number;
   domain?: string;
   path?: string;
@@ -45,10 +51,6 @@ export interface MetricsOptions {
   sampleRate?: number;
   flushTimer?: number;
   maxQueueSize?: number;
-}
-
-export interface StoreOptions {
-  enabled?: boolean;
 }
 
 export interface UserOptions {
@@ -73,6 +75,7 @@ export interface GroupOptions {
 }
 
 export interface InitOptions {
+  plan?: any;
   initialPageview?: boolean;
   cookie?: CookieOptions;
   metrics?: MetricsOptions;
@@ -80,17 +83,20 @@ export interface InitOptions {
   user?: UserOptions;
   group?: GroupOptions;
   integrations?: SegmentIntegration;
+  localStorageFallbackDisabled?: boolean;
+  persist?: boolean;
 }
 
 export interface SegmentIntegration {
   All?: boolean;
+
   [integration: string]: boolean | undefined;
 }
 
 export interface SegmentOpts {
   integrations?: any;
   anonymousId?: string;
-  context?: object;
+  context?: any;
 }
 
 export interface Message {

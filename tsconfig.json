@@ -2,10 +2,11 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "module": "commonjs",
+    "moduleResolution": "Node",
     "target": "ES5",
-    "allowJs": true,
     "outDir": "build",
-    "lib": ["dom"]
+    "lib": ["DOM", "ES2019"],
+    "skipDefaultLibCheck": true
   },
   "include": ["lib"],
   "exclude": ["node_modules", "*.md", "Makefile", "karma.*", "test", "test-e2e"]

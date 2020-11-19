@@ -1,14 +1,16 @@
-import { Message } from './types';
-import includes from 'lodash.includes'
+import * as type from 'component-type';
 
 /**
  * Module Dependencies.
  */
+import _debug from 'debug';
+import includes from 'lodash.includes';
+import { hash as md5 } from 'spark-md5';
+import * as uuid from 'uuid/v4';
+import { Message } from './types';
 
-var debug = require('debug')('analytics.js:normalize');
-var type = require('component-type');
-var uuid = require('uuid/v4');
-var md5 = require('spark-md5').hash;
+
+const debug = _debug('analytics.js:normalize');
 
 
 /**
@@ -16,12 +18,6 @@ var md5 = require('spark-md5').hash;
  */
 
 var has = Object.prototype.hasOwnProperty;
-
-/**
- * Expose `normalize`
- */
-
-module.exports = normalize;
 
 /**
  * Toplevel properties.
@@ -37,10 +33,11 @@ interface NormalizedMessage {
   integrations?: {
     [key: string]: string;
   };
-  context?: unknown;
+  context?: any;
+  anonymousId?: any;
 }
 
-function normalize(msg: Message, list: Array<any>): NormalizedMessage {
+export function normalize(msg: Message, list: Array<any>): NormalizedMessage {
   const lower = list?.map(function(s) {
     return s.toLowerCase();
   });
@@ -91,7 +88,7 @@ function normalize(msg: Message, list: Array<any>): NormalizedMessage {
   ret = {
     ...msg,
     ...ret
-  }
+  };
 
   debug('->', ret);
   return ret;
